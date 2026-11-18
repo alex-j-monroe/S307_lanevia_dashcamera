@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import DataTable from '../components/DataTable.astro';
+import { buyers, buyerView, site } from '../lib/data';
+---
+<Base title={buyers.seo_title} description={buyers.seo_description}>
+  <section class="page-head">
+    <div class="container">
+      <span class="eyebrow">For data buyers</span>
+      <h1>{buyers.title}</h1>
+      <p>{buyers.intro}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2">
+        {buyers.segments.map((s) => (
+          <article class="card card--accent">
+            <h3>{s.name}</h3>
+            <p>{s.use}</p>
+            <p class="muted"><strong>Access:</strong> {s.access}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <h2>{buyers.view_title}</h2>
+      <p class="lead">{buyers.view_text}</p>
+      <DataTable
+        id="buyer-view"
+        caption="Sample buyer feed from the demo dataset"
+        columns={[
+          { key: 'event_date', label: 'Date' },
+          { key: 'buyer', label: 'Licensee' },
+          { key: 'data_level', label: 'Level', num: true },
+          { key: 'event_type', label: 'Event' },
+          { key: 'segment_lat', label: 'Segment lat', num: true, format: 'fixed2' },
+          { key: 'segment_lon', label: 'Segment lon', num: true, format: 'fixed2' },
+          { key: 'confirming_devices', label: 'Cameras', num: true },
+          { key: 'avg_confidence', label: 'Avg confidence', num: true, format: 'fixed2' },
+        ]}
+        rows={buyerView.rows}
+      />
+      <p class="muted">As of {buyerView.as_of}. Licensee names are fictional. {buyerView.note}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>{buyers.launch_title}</h2>
+      <div class="grid grid--2">
+        {buyers.launch.map((l) => (
+          <article class="card">
+            <span class="pill">{l.phase}</span>
+            <h3 style="margin-top:12px">{l.market}</h3>
+            <p>{l.focus}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--night">
+    <div class="container cta">
+      <div>
+        <h2>{buyers.cta_title}</h2>
+        <p>{buyers.cta_text}</p>
+      </div>
+      <a class="btn btn--primary" href={`mailto:${site.contact_email}?subject=Data%20license%20inquiry`}>Email {site.contact_email}</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .cta { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .cta p { margin: 0; }
+</style>

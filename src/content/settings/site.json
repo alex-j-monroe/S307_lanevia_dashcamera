@@ -1,0 +1,11 @@
+{
+  "company_name": "Lanevia",
+  "product_name": "RoadSense One",
+  "tagline": "Road intelligence from drivers who choose to share.",
+  "description": "Lanevia makes an affordable AI dash cam that detects work zones, closures and road hazards, and shares that road data only with each driver's consent.",
+  "contact_email": "hello@lanevia.example",
+  "announcement": "Concept demo: Phase 1 pilot planned for Indianapolis.",
+  "announcement_link_text": "See how it works",
+  "announcement_link": "/how-it-works/",
+  "disclaimer": "Lanevia is a concept startup created for an Indiana University S307 class project (Group 10). Product, companies and data shown are fictional."
+}

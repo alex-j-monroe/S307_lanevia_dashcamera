@@ -1,0 +1,61 @@
+---
+// Accessible, sortable table. Works without JavaScript (rows stay in data order).
+interface Col { key: string; label: string; num?: boolean; wrap?: boolean; format?: 'pct' | 'fixed2' | 'fixed4' }
+interface Props { id: string; caption: string; columns: Col[]; rows: Record<string, unknown>[] }
+const { id, caption, columns, rows } = Astro.props;
+const fmt = (v: unknown, c: Col) => {
+  if (typeof v === 'number') {
+    if (c.format === 'fixed2') return v.toFixed(2);
+    if (c.format === 'fixed4') return v.toFixed(4);
+  }
+  return String(v ?? '');
+};
+---
+<div class="table-wrap">
+  <table id={id} data-sortable>
+    <caption class="sr-only">{caption}</caption>
+    <thead>
+      <tr>
+        {columns.map((c, i) => (
+          <th scope="col" class={c.num ? 'num' : undefined} aria-sort="none" data-col={i} data-num={c.num ? '1' : undefined}>
+            <button type="button" class="sort">{c.label}</button>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          {columns.map((c) => (
+            <td class={[c.num && 'num', c.wrap && 'wrap'].filter(Boolean).join(' ') || undefined} data-v={String(r[c.key] ?? '')}>{fmt(r[c.key], c)}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<script>
+  document.querySelectorAll<HTMLTableElement>('table[data-sortable]').forEach((table) => {
+    if (table.dataset.ready) return;
+    table.dataset.ready = '1';
+    const ths = Array.from(table.querySelectorAll<HTMLTableCellElement>('thead th'));
+    ths.forEach((th) => {
+      th.querySelector('button')?.addEventListener('click', () => {
+        const col = Number(th.dataset.col);
+        const asc = th.getAttribute('aria-sort') !== 'ascending';
+        ths.forEach((o) => o.setAttribute('aria-sort', 'none'));
+        th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+        const isNum = th.dataset.num === '1';
+        const body = table.tBodies[0];
+        const rows = Array.from(body.rows);
+        rows.sort((a, b) => {
+          const x = a.cells[col].dataset.v ?? '';
+          const y = b.cells[col].dataset.v ?? '';
+          const d = isNum ? Number(x) - Number(y) : x.localeCompare(y);
+          return asc ? d : -d;
+        });
+        rows.forEach((r) => body.appendChild(r));
+      });
+    });
+  });
+</script>

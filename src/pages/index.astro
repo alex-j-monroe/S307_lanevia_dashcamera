@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import CameraModel from '../components/CameraModel.astro';
+import DataTable from '../components/DataTable.astro';
+import { home, site, roadEvents } from '../lib/data';
+import { url } from '../lib/url';
+const sample = roadEvents.events.slice(-6).reverse();
+---
+<Base title={home.seo_title} description={home.seo_description}>
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <span class="eyebrow">{home.hero_eyebrow}</span>
+        <h1>{home.hero_title}</h1>
+        <p class="lead">{home.hero_text}</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href={url(home.primary_cta_link)}>{home.primary_cta_text}</a>
+          <a class="btn btn--ghost" href={url(home.secondary_cta_link)}>{home.secondary_cta_text}</a>
+        </div>
+      </div>
+      <CameraModel />
+    </div>
+  </section>
+
+  <section class="section--night section--tight">
+    <div class="container facts">
+      {home.facts.map((f) => (
+        <div class="fact">
+          <div class="fact__value">{f.value}</div>
+          <div class="fact__label">{f.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">{site.product_name}</span>
+      <h2>{home.features_title}</h2>
+      <div class="grid grid--3 features">
+        {home.features.map((f) => (
+          <article class="card card--accent">
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <span class="eyebrow">Demo data</span>
+      <h2>{home.snapshot_title}</h2>
+      <p class="lead">{home.snapshot_text}</p>
+      <DataTable
+        id="home-events"
+        caption="Most recent road events in the demo dataset"
+        columns={[
+          { key: 'detected_at', label: 'Detected' },
+          { key: 'event_type', label: 'Event' },
+          { key: 'confidence', label: 'Confidence', num: true, format: 'fixed2' },
+          { key: 'latitude', label: 'Latitude', num: true, format: 'fixed4' },
+          { key: 'longitude', label: 'Longitude', num: true, format: 'fixed4' },
+        ]}
+        rows={sample}
+      />
+      <p class="muted">Showing the 6 most recent of {roadEvents.events.length} events, as of {roadEvents.as_of}. <a href={url('/how-it-works/#events')}>See all events</a>. {roadEvents.note}</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .hero { padding: var(--space-16) 0 var(--space-24); background: linear-gradient(180deg, #fff 0%, var(--color-surface) 100%); }
+  .hero__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--space-12); align-items: center; }
+  .hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: var(--space-6); }
+  .features { margin-top: var(--space-8); }
+  @media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
+</style>

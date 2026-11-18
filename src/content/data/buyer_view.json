@@ -1,0 +1,105 @@
+{
+  "as_of": "2026-10-31",
+  "note": "What licensed buyers receive: road-level events confirmed by 3 or more cameras, with no customer, device or clip IDs.",
+  "rows": [
+    {
+      "license_id": "L01",
+      "buyer": "Crossroads State DOT",
+      "data_level": 1,
+      "event_type": "work zone",
+      "segment_lat": 39.72,
+      "segment_lon": -86.26,
+      "event_date": "2026-09-14",
+      "confirming_devices": 3,
+      "avg_confidence": 0.91
+    },
+    {
+      "license_id": "L02",
+      "buyer": "Crossroads State DOT",
+      "data_level": 2,
+      "event_type": "work zone",
+      "segment_lat": 39.72,
+      "segment_lon": -86.26,
+      "event_date": "2026-09-14",
+      "confirming_devices": 3,
+      "avg_confidence": 0.94
+    },
+    {
+      "license_id": "L06",
+      "buyer": "NorthStar Mapping",
+      "data_level": 1,
+      "event_type": "work zone",
+      "segment_lat": 39.72,
+      "segment_lon": -86.26,
+      "event_date": "2026-09-14",
+      "confirming_devices": 3,
+      "avg_confidence": 0.91
+    },
+    {
+      "license_id": "L01",
+      "buyer": "Crossroads State DOT",
+      "data_level": 1,
+      "event_type": "lane closure",
+      "segment_lat": 39.76,
+      "segment_lon": -86.14,
+      "event_date": "2026-09-22",
+      "confirming_devices": 4,
+      "avg_confidence": 0.92
+    },
+    {
+      "license_id": "L05",
+      "buyer": "Lanewise Autonomy",
+      "data_level": 1,
+      "event_type": "lane closure",
+      "segment_lat": 39.76,
+      "segment_lon": -86.14,
+      "event_date": "2026-09-22",
+      "confirming_devices": 4,
+      "avg_confidence": 0.92
+    },
+    {
+      "license_id": "L01",
+      "buyer": "Crossroads State DOT",
+      "data_level": 1,
+      "event_type": "road closure",
+      "segment_lat": 39.86,
+      "segment_lon": -86.12,
+      "event_date": "2026-10-08",
+      "confirming_devices": 4,
+      "avg_confidence": 0.92
+    },
+    {
+      "license_id": "L09",
+      "buyer": "Keystone Mutual Insurance",
+      "data_level": 1,
+      "event_type": "road closure",
+      "segment_lat": 39.86,
+      "segment_lon": -86.12,
+      "event_date": "2026-10-08",
+      "confirming_devices": 4,
+      "avg_confidence": 0.92
+    },
+    {
+      "license_id": "L07",
+      "buyer": "NorthStar Mapping",
+      "data_level": 1,
+      "event_type": "debris",
+      "segment_lat": 39.9,
+      "segment_lon": -86.04,
+      "event_date": "2026-10-20",
+      "confirming_devices": 3,
+      "avg_confidence": 0.87
+    },
+    {
+      "license_id": "L08",
+      "buyer": "Polar AV Labs",
+      "data_level": 2,
+      "event_type": "debris",
+      "segment_lat": 39.9,
+      "segment_lon": -86.04,
+      "event_date": "2026-10-20",
+      "confirming_devices": 3,
+      "avg_confidence": 0.86
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "seo_title": "For data buyers | Lanevia",
+  "seo_description": "Licensed, consent-based road condition data for road agencies, mapping and autonomous-vehicle teams, and insurers.",
+  "title": "Fresh road data, collected with consent",
+  "intro": "Lanevia licenses road-condition detections confirmed by multiple cameras. Every record traces back to an active driver consent and a signed license, so your compliance team can say yes.",
+  "segments": [
+    { "name": "Road agencies", "use": "Find active work zones and closures across your network, updated daily.", "access": "Detections and blurred clips" },
+    { "name": "Mapping and autonomous vehicles", "use": "Keep maps current and train on real winter and work-zone conditions.", "access": "Detections and blurred clips" },
+    { "name": "Insurers", "use": "Understand road-level risk by segment and month.", "access": "Aggregate road data only, never driver scores" },
+    { "name": "Government requests", "use": "Specific footage for an investigation.", "access": "Only with formal legal process, and every request is logged" }
+  ],
+  "view_title": "What a license delivers (demo data)",
+  "view_text": "This is the exact shape of the buyer feed: road segment, date, event type, how many cameras confirmed it, and average confidence. No customer, device or clip IDs.",
+  "launch_title": "Where we are launching",
+  "launch": [
+    { "phase": "Phase 1", "market": "Indianapolis", "focus": "Commuters, with the state DOT as our first buyer for work-zone and closure data, plus winter road conditions." },
+    { "phase": "Phase 2", "market": "Dallas or Houston", "focus": "Autonomous-vehicle and mapping buyers, once Phase 1 proves our consent and de-identification controls." }
+  ],
+  "cta_title": "Interested in a data license?",
+  "cta_text": "Tell us your use case, the area you cover and the data level you need."
+}

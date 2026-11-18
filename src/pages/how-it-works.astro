@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import DataTable from '../components/DataTable.astro';
+import { how, roadEvents } from '../lib/data';
+---
+<Base title={how.seo_title} description={how.seo_description}>
+  <section class="page-head">
+    <div class="container">
+      <span class="eyebrow">How it works</span>
+      <h1>{how.title}</h1>
+      <p>{how.intro}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container narrow">
+      <ol class="steps">
+        {how.steps.map((s) => (
+          <li><h3>{s.title}</h3><p>{s.text}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <h2>{how.levels_title}</h2>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">{how.levels_title}</caption>
+          <thead><tr><th scope="col" class="num">Level</th><th scope="col">Name</th><th scope="col">What a buyer receives</th><th scope="col">Default</th></tr></thead>
+          <tbody>
+            {how.levels.map((l) => (
+              <tr><td class="num">{l.level}</td><td>{l.name}</td><td class="wrap">{l.receives}</td><td><span class="pill">{l.default}</span></td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--night">
+    <div class="container narrow">
+      <h2>{how.privacy_title}</h2>
+      <ul class="checklist">
+        {how.privacy.map((p) => <li>{p}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="events">
+    <div class="container">
+      <h2>{how.events_title}</h2>
+      <p class="lead">{how.events_text}</p>
+      <DataTable
+        id="all-events"
+        caption="All road events in the demo dataset"
+        columns={[
+          { key: 'event_id', label: 'Event' },
+          { key: 'event_type', label: 'Type' },
+          { key: 'confidence', label: 'Confidence', num: true, format: 'fixed2' },
+          { key: 'latitude', label: 'Latitude', num: true, format: 'fixed4' },
+          { key: 'longitude', label: 'Longitude', num: true, format: 'fixed4' },
+          { key: 'detected_at', label: 'Detected' },
+        ]}
+        rows={roadEvents.events}
+      />
+      <p class="muted">As of {roadEvents.as_of}. {roadEvents.note}</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .narrow { max-width: 820px; }
+  .section--night .checklist { color: var(--color-on-night); }
+</style>

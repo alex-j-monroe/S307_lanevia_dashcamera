@@ -1,0 +1,126 @@
+{
+  "as_of": "2026-10-31",
+  "note": "Demo data from the Lanevia pilot dataset. Every record is fictional.",
+  "events": [
+    {
+      "event_id": "E01",
+      "event_type": "work zone",
+      "confidence": 0.94,
+      "latitude": 39.7275,
+      "longitude": -86.269,
+      "detected_at": "2026-09-14 07:42"
+    },
+    {
+      "event_id": "E02",
+      "event_type": "work zone",
+      "confidence": 0.91,
+      "latitude": 39.7279,
+      "longitude": -86.2684,
+      "detected_at": "2026-09-14 07:55"
+    },
+    {
+      "event_id": "E03",
+      "event_type": "work zone",
+      "confidence": 0.88,
+      "latitude": 39.7272,
+      "longitude": -86.2697,
+      "detected_at": "2026-09-14 08:10"
+    },
+    {
+      "event_id": "E04",
+      "event_type": "lane closure",
+      "confidence": 0.96,
+      "latitude": 39.765,
+      "longitude": -86.148,
+      "detected_at": "2026-09-22 08:05"
+    },
+    {
+      "event_id": "E05",
+      "event_type": "lane closure",
+      "confidence": 0.89,
+      "latitude": 39.7654,
+      "longitude": -86.1474,
+      "detected_at": "2026-09-22 08:12"
+    },
+    {
+      "event_id": "E06",
+      "event_type": "lane closure",
+      "confidence": 0.93,
+      "latitude": 39.7647,
+      "longitude": -86.1486,
+      "detected_at": "2026-09-22 08:31"
+    },
+    {
+      "event_id": "E07",
+      "event_type": "lane closure",
+      "confidence": 0.9,
+      "latitude": 39.7652,
+      "longitude": -86.1477,
+      "detected_at": "2026-09-22 17:40"
+    },
+    {
+      "event_id": "E08",
+      "event_type": "pothole",
+      "confidence": 0.81,
+      "latitude": 39.81,
+      "longitude": -86.1578,
+      "detected_at": "2026-10-02 18:10"
+    },
+    {
+      "event_id": "E09",
+      "event_type": "road closure",
+      "confidence": 0.97,
+      "latitude": 39.864,
+      "longitude": -86.1215,
+      "detected_at": "2026-10-08 07:50"
+    },
+    {
+      "event_id": "E10",
+      "event_type": "road closure",
+      "confidence": 0.92,
+      "latitude": 39.8644,
+      "longitude": -86.1211,
+      "detected_at": "2026-10-08 08:02"
+    },
+    {
+      "event_id": "E11",
+      "event_type": "road closure",
+      "confidence": 0.95,
+      "latitude": 39.8637,
+      "longitude": -86.1219,
+      "detected_at": "2026-10-08 08:15"
+    },
+    {
+      "event_id": "E12",
+      "event_type": "road closure",
+      "confidence": 0.87,
+      "latitude": 39.8642,
+      "longitude": -86.1213,
+      "detected_at": "2026-10-08 17:20"
+    },
+    {
+      "event_id": "E13",
+      "event_type": "debris",
+      "confidence": 0.86,
+      "latitude": 39.905,
+      "longitude": -86.043,
+      "detected_at": "2026-10-20 07:35"
+    },
+    {
+      "event_id": "E14",
+      "event_type": "debris",
+      "confidence": 0.9,
+      "latitude": 39.9053,
+      "longitude": -86.0426,
+      "detected_at": "2026-10-20 07:58"
+    },
+    {
+      "event_id": "E15",
+      "event_type": "debris",
+      "confidence": 0.84,
+      "latitude": 39.9047,
+      "longitude": -86.0434,
+      "detected_at": "2026-10-20 08:20"
+    }
+  ]
+}

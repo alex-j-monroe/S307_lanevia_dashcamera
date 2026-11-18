@@ -1,0 +1,54 @@
+---
+import { site } from '../lib/data';
+import { url } from '../lib/url';
+const links = [
+  { href: '/', label: 'Product' },
+  { href: '/how-it-works/', label: 'How it works' },
+  { href: '/buyers/', label: 'For data buyers' },
+];
+const here = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const isCurrent = (href: string) => (href === '/' ? here === '/' : here.startsWith(href));
+---
+{site.announcement && (
+  <div class="announce">
+    <div class="container announce__inner">
+      <span>{site.announcement}</span>
+      {site.announcement_link && <a href={url(site.announcement_link)}>{site.announcement_link_text || 'Learn more'}</a>}
+    </div>
+  </div>
+)}
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href={url('/')} aria-label={`${site.company_name} home`}>
+      <img src={url('/favicon.svg')} alt="" width="32" height="32" />
+      <span>{site.company_name}</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {links.map((l) => (
+          <li><a href={url(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a class="btn btn--primary header-cta" href={`mailto:${site.contact_email}`}>Contact us</a>
+  </div>
+</header>
+<style>
+  .announce { background: var(--color-night); color: var(--color-on-night-muted); font-size: var(--fs-xs); }
+  .announce__inner { display: flex; gap: 12px; justify-content: center; padding-top: 8px; padding-bottom: 8px; flex-wrap: wrap; }
+  .announce a { color: var(--color-amber-light); font-weight: 600; }
+  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--color-border); }
+  .site-header__inner { display: flex; align-items: center; gap: 24px; min-height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: var(--color-ink); letter-spacing: -0.01em; }
+  nav { margin-left: auto; }
+  nav ul { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
+  nav a { display: block; padding: 8px 14px; border-radius: var(--radius-pill); text-decoration: none; color: var(--color-ink); font-weight: 500; font-size: var(--fs-sm); }
+  nav a:hover { background: var(--color-surface); }
+  nav a[aria-current="page"] { background: var(--color-amber-tint); color: var(--color-amber-text); font-weight: 600; }
+  .header-cta { padding: 9px 18px; font-size: var(--fs-sm); }
+  @media (max-width: 760px) {
+    .site-header__inner { flex-wrap: wrap; gap: 8px; padding-top: 10px; padding-bottom: 10px; }
+    nav { margin-left: 0; order: 3; width: 100%; overflow-x: auto; }
+    .header-cta { margin-left: auto; }
+  }
+</style>

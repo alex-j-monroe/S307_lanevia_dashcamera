@@ -1,0 +1,32 @@
+---
+import { site } from '../lib/data';
+import { url } from '../lib/url';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div>
+      <div class="f-brand">{site.company_name}</div>
+      <p>{site.tagline}</p>
+      <p><a href={`mailto:${site.contact_email}`}>{site.contact_email}</a></p>
+    </div>
+    <ul>
+      <li><a href={url('/')}>Product</a></li>
+      <li><a href={url('/how-it-works/')}>How it works</a></li>
+      <li><a href={url('/buyers/')}>For data buyers</a></li>
+    </ul>
+  </div>
+  <div class="container disclaimer">
+    <p>{site.disclaimer}</p>
+    <p>&copy; {year} {site.company_name} concept</p>
+  </div>
+</footer>
+<style>
+  .site-footer { background: var(--color-night); color: var(--color-on-night-muted); padding: var(--space-16) 0 var(--space-6); font-size: var(--fs-sm); }
+  .site-footer__inner { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .f-brand { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; color: var(--color-on-night); margin-bottom: 6px; }
+  .site-footer a { color: var(--color-on-night); }
+  .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .disclaimer { border-top: 1px solid #343840; margin-top: var(--space-8); padding-top: var(--space-4); font-size: var(--fs-xs); }
+  .disclaimer p { margin: 0 0 4px; }
+</style>
