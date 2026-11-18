@@ -1,0 +1,445 @@
+---
+// Animated, stylized map of the I-65/I-70 North Split (Indianapolis).
+// Base map is static SVG; detections, events and the buyer grid are drawn by the script below.
+// Data: src/content/data/north_split_demo.json (fictional).
+import { northSplit } from '../lib/data';
+
+// Road geometry on an 800 x 600 drawing, north up. Stylized, not to scale.
+const I70E = '520,250 620,215 800,190';
+const I65N = '520,250 440,185 330,140 180,112 0,96';
+const CONC = '520,250 535,420 540,600';
+const ROUTE = '800,190 620,215 520,250 535,420 540,600'; // demo commute: I-70 WB into I-65/I-70 SB
+const streets = [
+  { d: 'M0,160 L800,160', label: '10th St', lx: 8, ly: 152 },
+  { d: 'M0,330 L800,330', label: 'Michigan St', lx: 8, ly: 322 },
+  { d: 'M0,372 L800,372', label: 'New York St', lx: 8, ly: 390 },
+  { d: 'M0,540 L800,540', label: 'Washington St', lx: 8, ly: 532 },
+  { d: 'M110,0 L110,600', label: 'Meridian St', lx: 116, ly: 590, v: true },
+  { d: 'M210,0 L210,600', label: 'Delaware St', lx: 216, ly: 590, v: true },
+  { d: 'M400,0 L400,600', label: 'College Ave', lx: 406, ly: 590, v: true },
+  { d: 'M120,520 L560,80', label: 'Mass Ave', lx: 236, ly: 396, rot: -45 },
+];
+// Cones along the closed left lane of I-70 WB (north edge), and barrels on the SB shoulder.
+const cones = [572, 586, 600, 614, 628, 642].map((x) => {
+  const y = 250 - 35 * ((x - 520) / 100) - 9;
+  return { x, y };
+});
+const barrels = [318, 332, 346, 360, 374].map((y) => ({ x: 520 + 15 * ((y - 250) / 170) + 12, y }));
+const data = JSON.stringify(northSplit);
+---
+<div class="nsmap" data-nsmap>
+  <script type="application/json" data-nsmap-data set:html={data}></script>
+  <div class="nsmap__stage">
+    <div class="nsmap__viewbar" role="group" aria-label="Choose a view">
+      <button type="button" class="nsmap__view is-on" data-view="driver" aria-pressed="true">Driver view</button>
+      <button type="button" class="nsmap__view" data-view="buyer" aria-pressed="false">Buyer view</button>
+    </div>
+    <svg class="nsmap__svg" viewBox="0 0 800 600" role="img" aria-labelledby="nsmap-title nsmap-desc">
+      <title id="nsmap-title">Stylized map of the I-65/I-70 North Split in Indianapolis with demo road events</title>
+      <desc id="nsmap-desc">An animated, fictional morning of RoadSense One detections. Individual camera sightings appear, and an event is confirmed once three different cameras have seen it. The event list beside the map gives the same information as text.</desc>
+      <defs>
+        <pattern id="nsmap-blocks" width="40" height="40" patternUnits="userSpaceOnUse">
+          <rect width="40" height="40" fill="#15171b" />
+          <rect x="4" y="4" width="32" height="32" rx="3" fill="#191c21" />
+        </pattern>
+        <radialGradient id="nsmap-glow">
+          <stop offset="0" stop-color="#f59e0b" stop-opacity=".55" />
+          <stop offset="1" stop-color="#f59e0b" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="800" height="600" fill="url(#nsmap-blocks)" />
+      <text x="232" y="470" class="nsmap__area">DOWNTOWN</text>
+      <text x="630" y="300" class="nsmap__area">HOLY CROSS</text>
+
+      <g class="nsmap__streets">
+        {streets.map((s) => <path d={s.d} />)}
+      </g>
+      <g class="nsmap__streetlabels">
+        {streets.map((s) => (
+          <text x={s.lx} y={s.ly} transform={s.v ? `rotate(-90 ${s.lx} ${s.ly})` : s.rot ? `rotate(${s.rot} ${s.lx} ${s.ly})` : undefined}>{s.label}</text>
+        ))}
+      </g>
+
+      <g class="nsmap__hwy">
+        {[I70E, I65N, CONC].map((p) => <polyline class="casing" points={p} />)}
+        {[I70E, I65N, CONC].map((p) => <polyline class="deck" points={p} />)}
+        {[I70E, I65N, CONC].map((p) => <polyline class="lanes" points={p} />)}
+      </g>
+
+      <g class="nsmap__work" aria-hidden="true">
+        <line x1="565" y1="232" x2="648" y2="203" class="taper" />
+        {cones.map((c) => <path d={`M${c.x},${c.y - 6} L${c.x + 4},${c.y + 3} L${c.x - 4},${c.y + 3} Z`} class="cone" />)}
+        {barrels.map((b) => <rect x={b.x - 3} y={b.y - 4} width="6" height="8" rx="1.5" class="barrel" />)}
+      </g>
+
+      <g class="nsmap__shields" aria-hidden="true">
+        <g transform="translate(168 98)"><path d="M-14,-12 H14 V4 Q14,14 0,18 Q-14,14 -14,4 Z" /><text y="6">65</text></g>
+        <g transform="translate(730 172)"><path d="M-14,-12 H14 V4 Q14,14 0,18 Q-14,14 -14,4 Z" /><text y="6">70</text></g>
+        <g transform="translate(572 492)"><path d="M-14,-12 H14 V4 Q14,14 0,18 Q-14,14 -14,4 Z" /><text y="6">65</text></g>
+        <g transform="translate(604 492)"><path d="M-14,-12 H14 V4 Q14,14 0,18 Q-14,14 -14,4 Z" /><text y="6">70</text></g>
+      </g>
+      <g class="nsmap__splitlabel" aria-hidden="true">
+        <line x1="512" y1="256" x2="470" y2="286" />
+        <text x="466" y="300" text-anchor="end">NORTH SPLIT</text>
+      </g>
+
+      <g class="nsmap__cells" data-layer="cells"></g>
+      <polyline class="nsmap__route" points={ROUTE} data-route />
+      <g data-layer="dots"></g>
+      <g data-layer="events"></g>
+      <g class="nsmap__car" data-car><circle r="9" /><path d="M-4,-1 L0,-5 L4,-1 M0,-5 V5" /></g>
+
+      <g class="nsmap__compass" transform="translate(760 40)" aria-hidden="true">
+        <circle r="16" /><path d="M0,-11 L5,4 L0,1 L-5,4 Z" /><text y="-20">N</text>
+      </g>
+      <text x="788" y="590" text-anchor="end" class="nsmap__fine">Stylized, not to scale</text>
+    </svg>
+
+    <div class="nsmap__controls">
+      <button type="button" class="nsmap__play" data-play aria-label="Play">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path data-icon d="M6,4 L16,10 L6,16 Z" /></svg>
+      </button>
+      <label class="sr-only" for="nsmap-scrub">Time of day</label>
+      <input id="nsmap-scrub" type="range" min="0" max={northSplit.duration_min} step="1" value="0" data-scrub />
+      <span class="nsmap__clock" data-clock aria-live="off">6:30 AM</span>
+    </div>
+    <ul class="nsmap__legend" data-legend="driver">
+      <li><span class="k k--you"></span>Your camera</li>
+      <li><span class="k k--other"></span>Another camera (anonymous)</li>
+      <li><span class="k k--pending"></span>Seen, not confirmed</li>
+      <li><span class="k k--confirmed"></span>Confirmed (3+ cameras)</li>
+    </ul>
+    <ul class="nsmap__legend" data-legend="buyer" hidden>
+      <li><span class="k k--cell"></span>Road segment (0.01° grid)</li>
+      <li><span class="k k--confirmed"></span>Licensed event, segment center only</li>
+    </ul>
+  </div>
+
+  <aside class="nsmap__panel" aria-label="Event details">
+    <p class="nsmap__mode" data-mode>Driver view: what you see in the Lanevia app.</p>
+    <ul class="nsmap__list" data-list></ul>
+    <p class="nsmap__held" data-held hidden></p>
+    <div class="nsmap__detail" data-detail aria-live="polite"></div>
+  </aside>
+</div>
+
+<style>
+  .nsmap { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(280px, 1fr); gap: var(--space-6); align-items: start; margin-top: var(--space-8); }
+  .nsmap__stage { position: relative; background: var(--color-night); border-radius: var(--radius-card); padding: var(--space-3); box-shadow: var(--shadow-card); }
+  .nsmap__svg { display: block; width: 100%; height: auto; border-radius: 10px; }
+  .nsmap__viewbar { position: absolute; top: 22px; left: 22px; z-index: 2; display: flex; gap: 4px; padding: 4px; background: rgba(21,23,27,.85); border: 1px solid #3a3f48; border-radius: var(--radius-pill); backdrop-filter: blur(4px); }
+  .nsmap__view { font: 600 var(--fs-xs) var(--font-body); color: var(--color-on-night); background: none; border: 0; padding: 6px 14px; border-radius: var(--radius-pill); cursor: pointer; }
+  .nsmap__view.is-on { background: var(--color-amber); color: var(--color-ink); }
+
+  .nsmap__svg :global(.nsmap__area) { font: 700 15px var(--font-display); letter-spacing: .2em; fill: #2c3038; }
+  .nsmap__streets path { stroke: #2b2f36; stroke-width: 8; fill: none; }
+  .nsmap__streetlabels text { font: 500 11px var(--font-body); fill: #8a919c; }
+  .nsmap__hwy polyline { fill: none; stroke-linejoin: round; stroke-linecap: butt; }
+  .nsmap__hwy .casing { stroke: #4a505b; stroke-width: 28; }
+  .nsmap__hwy .deck { stroke: #30343c; stroke-width: 24; }
+  .nsmap__hwy .lanes { stroke: #6b727d; stroke-width: 1.2; stroke-dasharray: 6 8; }
+  .nsmap__work .taper { stroke: #f59e0b; stroke-width: 2; stroke-dasharray: 3 3; opacity: .7; }
+  .nsmap__work .cone { fill: #f59e0b; }
+  .nsmap__work .barrel { fill: #f59e0b; stroke: #fff7ed; stroke-width: 1.5; }
+  .nsmap__shields path { fill: #f3f1ec; stroke: #15171b; stroke-width: 1.5; }
+  .nsmap__shields text { font: 800 11px var(--font-display); fill: #15171b; text-anchor: middle; }
+  .nsmap__splitlabel line { stroke: #8a919c; stroke-width: 1; }
+  .nsmap__splitlabel text { font: 700 11px var(--font-display); letter-spacing: .12em; fill: #d6d9de; }
+  .nsmap__compass circle { fill: #23272e; stroke: #4a505b; }
+  .nsmap__compass path { fill: #f59e0b; }
+  .nsmap__compass text { font: 700 11px var(--font-display); fill: #b9bec7; text-anchor: middle; }
+  .nsmap__fine { font: 500 11px var(--font-body); fill: #6b727d; }
+  .nsmap__route { fill: none; stroke: #f59e0b; stroke-width: 3; stroke-dasharray: 2 7; stroke-linecap: round; opacity: .55; }
+  .nsmap__car circle { fill: #f59e0b; stroke: #15171b; stroke-width: 2.5; }
+  .nsmap__car path { stroke: #1c1917; stroke-width: 2; fill: none; stroke-linecap: round; }
+
+  .nsmap__svg :global(.dot) { stroke: #15171b; stroke-width: 1.5; }
+  .nsmap__svg :global(.dot--other) { fill: #d6d9de; }
+  .nsmap__svg :global(.dot--you) { fill: #f59e0b; stroke: #fff7ed; stroke-width: 2; }
+  .nsmap__svg :global(.dot--new) { animation: nsmap-pop .5s ease-out; transform-box: fill-box; transform-origin: center; }
+  .nsmap__svg :global(.ev) { cursor: pointer; }
+  .nsmap__svg :global(.ev .ring) { fill: #23272e; stroke: #f59e0b; stroke-width: 2; stroke-dasharray: 4 3; }
+  .nsmap__svg :global(.ev.is-confirmed .ring) { fill: #f59e0b; stroke: #fff7ed; stroke-dasharray: none; }
+  .nsmap__svg :global(.ev .glyph) { fill: none; stroke: #f59e0b; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .nsmap__svg :global(.ev.is-confirmed .glyph) { stroke: #1c1917; }
+  .nsmap__svg :global(.ev .count) { font: 700 10px var(--font-display); fill: #f3f1ec; text-anchor: middle; }
+  .nsmap__svg :global(.ev .halo) { fill: url(#nsmap-glow); opacity: 0; }
+  .nsmap__svg :global(.ev.is-confirmed .halo) { opacity: 1; }
+  .nsmap__svg :global(.ev.is-selected .ring) { stroke-width: 3.5; }
+  .nsmap__svg :global(.cell) { fill: rgba(245,158,11,.03); stroke: #3a3f48; stroke-dasharray: 4 4; }
+  .nsmap__svg :global(.cell.is-on) { fill: rgba(245,158,11,.22); stroke: #f59e0b; stroke-dasharray: none; }
+  .nsmap__svg :global(.cell-label) { font: 600 10px var(--font-body); fill: #8a919c; }
+  @keyframes nsmap-pop { from { transform: scale(2.4); opacity: .2; } to { transform: scale(1); opacity: 1; } }
+
+  .nsmap__controls { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-2) 0; }
+  .nsmap__play { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--color-amber); cursor: pointer; display: grid; place-items: center; }
+  .nsmap__play svg { width: 18px; height: 18px; fill: var(--color-ink); }
+  .nsmap__controls input { flex: 1; accent-color: var(--color-amber); }
+  .nsmap__clock { font: 700 var(--fs-sm) var(--font-display); color: var(--color-on-night); min-width: 78px; text-align: right; font-variant-numeric: tabular-nums; }
+  .nsmap__legend { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; margin: var(--space-3) var(--space-2) var(--space-2); padding: 0; font-size: var(--fs-xs); color: var(--color-on-night-muted); }
+  .nsmap__legend[hidden] { display: none; }
+  .nsmap__legend li { display: flex; align-items: center; gap: 6px; }
+  .k { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .k--you { background: #f59e0b; box-shadow: 0 0 0 2px #fff7ed inset; }
+  .k--other { background: #d6d9de; }
+  .k--pending { background: #23272e; border: 2px dashed #f59e0b; }
+  .k--confirmed { background: #f59e0b; }
+  .k--cell { border-radius: 2px; background: rgba(245,158,11,.22); border: 1px solid #f59e0b; }
+
+  .nsmap__panel { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: var(--space-6); box-shadow: var(--shadow-card); }
+  .nsmap__mode { font-size: var(--fs-sm); color: var(--color-muted); margin-bottom: var(--space-4); }
+  .nsmap__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .nsmap__list :global(button) { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: left; font: 600 var(--fs-sm) var(--font-body); color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+  .nsmap__list :global(button[aria-pressed='true']) { border-color: var(--color-amber); box-shadow: inset 3px 0 0 var(--color-amber); background: var(--color-amber-tint); }
+  .nsmap__list :global(.st) { flex: none; font: 600 var(--fs-xs) var(--font-body); padding: 2px 8px; border-radius: var(--radius-pill); background: #eceae4; color: var(--color-muted); }
+  .nsmap__list :global(.st--pending) { background: var(--color-amber-tint); color: var(--color-amber-text); }
+  .nsmap__list :global(.st--confirmed) { background: var(--color-amber); color: var(--color-ink); }
+  .nsmap__held { font-size: var(--fs-xs); color: var(--color-muted); margin: var(--space-3) 0 0; }
+  .nsmap__detail { margin-top: var(--space-6); border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+  .nsmap__detail :global(h3) { margin-bottom: 4px; }
+  .nsmap__detail :global(.road) { font-size: var(--fs-sm); color: var(--color-muted); margin-bottom: var(--space-3); }
+  .nsmap__detail :global(dl) { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; font-size: var(--fs-sm); }
+  .nsmap__detail :global(dt) { color: var(--color-muted); }
+  .nsmap__detail :global(dd) { margin: 0; color: var(--color-ink); font-weight: 600; }
+  .nsmap__detail :global(.foot) { font-size: var(--fs-xs); color: var(--color-muted); margin: var(--space-4) 0 0; }
+
+  @media (max-width: 960px) { .nsmap { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) {
+    .nsmap__viewbar { position: static; display: inline-flex; margin: 0 0 var(--space-3); }
+    .nsmap__view { padding: 5px 10px; }
+  }
+</style>
+
+<script>
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const LABEL = { lane_closure: 'Lane closure', work_zone: 'Work zone', debris: 'Debris', pothole: 'Pothole' };
+  const GLYPH = {
+    lane_closure: 'M0,-7 L5,5 L-5,5 Z M-3,1 H3',
+    work_zone: 'M-5,-6 H5 V6 H-5 Z M-5,-1 H5',
+    debris: 'M-6,4 L-1,-5 L2,1 L6,-3 M-6,6 H6',
+    pothole: 'M-6,0 Q0,-7 6,0 Q0,7 -6,0 Z',
+  };
+  // Buyer segment grid: TRUNC(lat, 2), TRUNC(lon, 2) cells mapped onto the drawing.
+  const COLS = [{ lon: -86.15, x: 220 }, { lon: -86.14, x: 400 }, { lon: -86.13, x: 580 }];
+  const ROWS = [{ lat: 39.78, y: 80 }, { lat: 39.77, y: 260 }];
+  const CELL_W = 180, CELL_H = 180;
+  const trunc2 = (n: number) => Math.trunc(n * 100) / 100;
+
+  function el(tag: string, attrs: Record<string, any> = {}, parent?: Element) {
+    const n = document.createElementNS(SVGNS, tag);
+    for (const k in attrs) n.setAttribute(k, String(attrs[k]));
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+
+  function mount(root: HTMLElement) {
+    const D = JSON.parse(root.querySelector('[data-nsmap-data]')!.textContent || '{}');
+    const [h0, m0] = D.start_time.split(':').map(Number);
+    const END = D.duration_min;
+    const clockText = (t: number) => {
+      const mins = h0 * 60 + m0 + Math.round(t);
+      const h = Math.floor(mins / 60), m = mins % 60;
+      return `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+    };
+
+    // Precompute each event's detections and the minute it reaches 3 distinct cameras.
+    const events = D.events.map((e: any) => {
+      const dets = D.detections.filter((d: any) => d.event === e.id).sort((a: any, b: any) => a.minute - b.minute);
+      const seen = new Set<string>();
+      let confirmAt: number | null = null;
+      for (const d of dets) { seen.add(d.camera); if (confirmAt === null && seen.size >= 3) confirmAt = d.minute; }
+      const segLat = trunc2(e.lat), segLon = trunc2(e.lon);
+      const col = COLS.find((c) => Math.abs(c.lon - segLon) < 1e-6);
+      const row = ROWS.find((r) => Math.abs(r.lat - segLat) < 1e-6);
+      const cell = col && row ? { x: col.x, y: row.y } : null;
+      return { ...e, dets, confirmAt, first: dets.length ? dets[0].minute : Infinity, segLat, segLon, cell };
+    });
+
+    const svg = root.querySelector('svg.nsmap__svg')!;
+    const gCells = svg.querySelector('[data-layer="cells"]')!;
+    const gDots = svg.querySelector('[data-layer="dots"]')!;
+    const gEvents = svg.querySelector('[data-layer="events"]')!;
+    const route = svg.querySelector('[data-route]') as SVGPolylineElement;
+    const car = svg.querySelector('[data-car]') as SVGGElement;
+    const routeLen = route.getTotalLength();
+    const CAR_START = 6, CAR_END = 30;
+
+    // Buyer grid cells
+    const cellEls: Record<string, Element> = {};
+    for (const r of ROWS) for (const c of COLS) {
+      const key = `${r.lat},${c.lon}`;
+      cellEls[key] = el('rect', { class: 'cell', x: c.x, y: r.y, width: CELL_W, height: CELL_H, rx: 6 }, gCells);
+      const t = el('text', { class: 'cell-label', x: c.x + 8, y: r.y + 16 }, gCells);
+      t.textContent = `${r.lat.toFixed(2)}, ${c.lon.toFixed(2)}`;
+    }
+
+    // Detection dots (deterministic jitter around the event)
+    const dotEls = D.detections.map((d: any, i: number) => {
+      const e = events.find((x: any) => x.id === d.event);
+      const a = i * 2.39996 + 0.6, r = 21 + (i % 3) * 5;
+      const you = d.camera === D.your_camera;
+      const c = el('circle', { class: `dot ${you ? 'dot--you' : 'dot--other'}`, cx: (e.x + Math.cos(a) * r).toFixed(1), cy: (e.y + Math.sin(a) * r).toFixed(1), r: you ? 5 : 4 }, gDots);
+      return { d, c, shown: false };
+    });
+
+    // Event markers
+    const evEls: Record<string, SVGGElement> = {};
+    for (const e of events) {
+      const g = el('g', { class: 'ev', 'data-id': e.id }, gEvents) as SVGGElement;
+      el('circle', { class: 'halo', r: 34 }, g);
+      el('circle', { class: 'ring', r: 13 }, g);
+      el('path', { class: 'glyph', d: GLYPH[e.type as keyof typeof GLYPH] || GLYPH.debris }, g);
+      el('text', { class: 'count', y: 30 }, g);
+      g.addEventListener('click', () => select(e.id));
+      evEls[e.id] = g;
+    }
+
+    const list = root.querySelector('[data-list]')!;
+    const detail = root.querySelector('[data-detail]')!;
+    const held = root.querySelector('[data-held]') as HTMLElement;
+    const mode = root.querySelector('[data-mode]')!;
+    const clock = root.querySelector('[data-clock]')!;
+    const scrub = root.querySelector('[data-scrub]') as HTMLInputElement;
+    const playBtn = root.querySelector('[data-play]') as HTMLButtonElement;
+    const playIcon = playBtn.querySelector('[data-icon]')!;
+    const legends = root.querySelectorAll<HTMLElement>('[data-legend]');
+
+    let t = 0, playing = false, view: 'driver' | 'buyer' = 'driver', selected = events[0]?.id, last = 0, raf = 0;
+
+    const statusOf = (e: any) => {
+      const dets = e.dets.filter((d: any) => d.minute <= t);
+      const cams = new Set(dets.map((d: any) => d.camera)).size;
+      const confirmed = e.confirmAt !== null && e.confirmAt <= t;
+      const avg = dets.length ? dets.reduce((s: number, d: any) => s + d.confidence, 0) / dets.length : 0;
+      const youSaw = dets.some((d: any) => d.camera === D.your_camera);
+      return { dets, cams, confirmed, avg, youSaw };
+    };
+
+    function select(id: string) { selected = id; render(); }
+
+    function render() {
+      clock.textContent = clockText(t);
+      scrub.value = String(Math.round(t));
+      const buyer = view === 'buyer';
+      route.style.display = buyer ? 'none' : '';
+      (gDots as SVGGElement).style.display = buyer ? 'none' : '';
+      (gCells as SVGGElement).style.display = buyer ? '' : 'none';
+
+      // car
+      if (!buyer && t >= CAR_START && t <= CAR_END) {
+        const p = route.getPointAtLength(((t - CAR_START) / (CAR_END - CAR_START)) * routeLen);
+        car.setAttribute('transform', `translate(${p.x} ${p.y})`);
+        car.style.display = '';
+      } else car.style.display = 'none';
+
+      for (const o of dotEls) {
+        const show = o.d.minute <= t;
+        o.c.style.display = show ? '' : 'none';
+        if (show && !o.shown && playing) { o.c.classList.remove('dot--new'); void (o.c as any).getBBox(); o.c.classList.add('dot--new'); }
+        o.shown = show;
+      }
+      for (const k in cellEls) cellEls[k].classList.remove('is-on');
+
+      let heldCount = 0;
+      list.innerHTML = '';
+      for (const e of events) {
+        const s = statusOf(e);
+        const g = evEls[e.id];
+        const seen = s.dets.length > 0;
+        const visible = buyer ? s.confirmed && !!e.cell : seen;
+        if (buyer && seen && !s.confirmed) heldCount++;
+        g.style.display = visible ? '' : 'none';
+        g.classList.toggle('is-confirmed', s.confirmed);
+        g.classList.toggle('is-selected', e.id === selected);
+        const pos = buyer && e.cell ? { x: e.cell.x + CELL_W / 2, y: e.cell.y + CELL_H / 2 } : { x: e.x, y: e.y };
+        g.setAttribute('transform', `translate(${pos.x} ${pos.y})`);
+        g.querySelector('.count')!.textContent = buyer ? '' : s.confirmed ? '' : `${s.cams}/3`;
+        if (buyer && s.confirmed && e.cell) cellEls[`${e.segLat},${e.segLon}`]?.classList.add('is-on');
+
+        if (!visible) continue;
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-pressed', String(e.id === selected));
+        const st = s.confirmed ? `<span class="st st--confirmed">${buyer ? 'Licensed' : `Confirmed · ${s.cams}`}</span>` : `<span class="st st--pending">${s.cams} of 3 cameras</span>`;
+        b.innerHTML = `<span>${LABEL[e.type as keyof typeof LABEL] || e.type}</span>${st}`;
+        b.addEventListener('click', () => select(e.id));
+        li.appendChild(b);
+        list.appendChild(li);
+      }
+      if (!list.children.length) list.innerHTML = `<li class="muted">${buyer ? 'No confirmed events yet. Press play.' : 'Nothing detected yet. Press play.'}</li>`;
+      held.hidden = !buyer || heldCount === 0;
+      held.textContent = `${heldCount} sighting${heldCount === 1 ? ' is' : 's are'} held back: fewer than 3 cameras so far.`;
+
+      // detail card
+      const e = events.find((x: any) => x.id === selected);
+      const s = e ? statusOf(e) : null;
+      const label = e ? LABEL[e.type as keyof typeof LABEL] || e.type : '';
+      if (!e || !s || s.dets.length === 0) {
+        detail.innerHTML = `<p class="muted">Select an event to see its details.</p>`;
+      } else if (buyer) {
+        if (!s.confirmed) {
+          detail.innerHTML = `<h3>${label}</h3><p class="road">Not released. Only ${s.cams} of 3 required cameras have seen this, so buyers receive nothing about it.</p>`;
+        } else {
+          const hr = clockText(e.confirmAt).replace(/:\d\d/, ':00');
+          detail.innerHTML = `<h3>${label}</h3><p class="road">What a licensed buyer receives (data level 1)</p>
+            <dl><dt>Road segment</dt><dd>${e.segLat.toFixed(2)}, ${e.segLon.toFixed(2)}</dd>
+            <dt>Date</dt><dd>${D.as_of}</dd><dt>Time window</dt><dd>${hr} hour</dd>
+            <dt>Cameras confirming</dt><dd>${s.cams}</dd><dt>Avg confidence</dt><dd>${s.avg.toFixed(2)}</dd></dl>
+            <p class="foot">No customer, device or clip IDs. No exact point, route or driver.</p>`;
+        }
+      } else {
+        detail.innerHTML = `<h3>${label}</h3><p class="road">${e.road}</p>
+          <dl><dt>What we see</dt><dd>${e.detail}</dd>
+          <dt>First seen</dt><dd>${clockText(e.first)}</dd>
+          <dt>Status</dt><dd>${s.confirmed ? `Confirmed at ${clockText(e.confirmAt)}` : `Waiting: ${s.cams} of 3 cameras`}</dd>
+          <dt>Cameras so far</dt><dd>${s.cams}</dd><dt>Avg confidence</dt><dd>${s.avg.toFixed(2)}</dd>
+          <dt>Your camera</dt><dd>${s.youSaw ? (s.confirmed ? 'Contributed. Credit eligible if licensed.' : 'Contributed') : 'Not on your route'}</dd></dl>
+          <p class="foot">Other cameras stay anonymous to you, just as you stay anonymous to them.</p>`;
+      }
+      mode.textContent = buyer ? 'Buyer view: what a licensed data buyer receives.' : 'Driver view: what you see in the Lanevia app.';
+    }
+
+    function setPlaying(p: boolean) {
+      playing = p;
+      playBtn.setAttribute('aria-label', p ? 'Pause' : 'Play');
+      playIcon.setAttribute('d', p ? 'M5,4 H8.5 V16 H5 Z M11.5,4 H15 V16 H11.5 Z' : 'M6,4 L16,10 L6,16 Z');
+      cancelAnimationFrame(raf);
+      if (p) { last = performance.now(); raf = requestAnimationFrame(tick); }
+    }
+    function tick(now: number) {
+      t = Math.min(END, t + ((now - last) / 1000) * 5); // 5 demo minutes per second
+      last = now;
+      render();
+      if (t >= END) { setPlaying(false); return; }
+      raf = requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', () => { if (!playing && t >= END) t = 0; setPlaying(!playing); });
+    scrub.addEventListener('input', () => { setPlaying(false); t = Number(scrub.value); render(); });
+    root.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((b) => b.addEventListener('click', () => {
+      view = b.dataset.view as 'driver' | 'buyer';
+      root.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
+      legends.forEach((l) => (l.hidden = l.dataset.legend !== view));
+      render();
+    }));
+
+    // Start state: a URL hash like #map-t=60&view=buyer is handy for screenshots and demos.
+    const q = new URLSearchParams(location.hash.replace(/^#map-/, ''));
+    if (q.has('t')) t = Math.max(0, Math.min(END, Number(q.get('t')) || 0));
+    if (q.get('view') === 'buyer') (root.querySelector('[data-view="buyer"]') as HTMLButtonElement).click();
+    if (q.get('sel')) selected = q.get('sel')!;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce && !q.has('t')) t = END;
+    render();
+
+    if (!reduce && !q.has('t')) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((en) => en.isIntersecting)) { io.disconnect(); setPlaying(true); }
+      }, { threshold: 0.4 });
+      io.observe(root);
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-nsmap]').forEach(mount);
+</script>

@@ -27,6 +27,17 @@ const banned = ['customer_id', 'device_id', 'clip_id', 'source_clip_id', 'source
   if (k in r) problems.push(`Buyer feed row ${i + 1}: "${k}" must never appear in buyer data`);
 }));
 
+const ns = load('data/north_split_demo.json');
+const ids = new Set((ns.events || []).map((e) => e.id));
+(ns.events || []).forEach((e, i) => {
+  need(e, ['id', 'type', 'lat', 'lon', 'x', 'y'], `North Split event ${i + 1}`);
+  if (e.x < 0 || e.x > 800 || e.y < 0 || e.y > 600) problems.push(`North Split event ${e.id}: x/y must be inside the 800 x 600 map`);
+});
+(ns.detections || []).forEach((d, i) => {
+  if (!ids.has(d.event)) problems.push(`North Split sighting ${i + 1}: event "${d.event}" does not exist`);
+  if (d.minute < 0 || d.minute > ns.duration_min) problems.push(`North Split sighting ${i + 1}: minute is outside the playback`);
+});
+
 if (problems.length) {
   console.error('Content check failed:\n- ' + problems.join('\n- '));
   process.exit(1);

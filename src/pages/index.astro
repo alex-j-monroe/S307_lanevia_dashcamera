@@ -2,7 +2,8 @@
 import Base from '../layouts/Base.astro';
 import CameraModel from '../components/CameraModel.astro';
 import DataTable from '../components/DataTable.astro';
-import { home, site, roadEvents } from '../lib/data';
+import RoadMapDemo from '../components/RoadMapDemo.astro';
+import { home, site, roadEvents, northSplit } from '../lib/data';
 import { url } from '../lib/url';
 const sample = roadEvents.events.slice(-6).reverse();
 ---
@@ -48,7 +49,17 @@ const sample = roadEvents.events.slice(-6).reverse();
     </div>
   </section>
 
-  <section class="section section--surface">
+  <section class="section section--surface" id="map">
+    <div class="container">
+      <span class="eyebrow">{home.map_eyebrow}</span>
+      <h2>{home.map_title}</h2>
+      <p class="lead">{home.map_text}</p>
+      <RoadMapDemo />
+      <p class="muted map-note">{northSplit.note}</p>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container">
       <span class="eyebrow">Demo data</span>
       <h2>{home.snapshot_title}</h2>
@@ -74,5 +85,6 @@ const sample = roadEvents.events.slice(-6).reverse();
   .hero__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--space-12); align-items: center; }
   .hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: var(--space-6); }
   .features { margin-top: var(--space-8); }
+  .map-note { margin-top: var(--space-4); }
   @media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
 </style>

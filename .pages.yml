@@ -56,6 +56,9 @@ content:
         fields:
           - { name: title, label: Title, type: string, required: true }
           - { name: text, label: Text, type: text, required: true }
+      - { name: map_eyebrow, label: Road map small label, type: string }
+      - { name: map_title, label: Road map heading, type: string }
+      - { name: map_text, label: Road map intro, type: text }
       - { name: snapshot_title, label: Data snapshot heading, type: string }
       - { name: snapshot_text, label: Data snapshot intro, type: text }
 
@@ -172,3 +175,39 @@ content:
           - { name: event_date, label: Date, type: string }
           - { name: confirming_devices, label: Cameras confirming, type: number }
           - { name: avg_confidence, label: Average confidence, type: number }
+
+  - name: north_split
+    label: "Demo data: North Split map"
+    type: file
+    path: src/content/data/north_split_demo.json
+    format: json
+    fields:
+      - { name: as_of, label: Demo date, type: string, description: "Format YYYY-MM-DD. Shown to buyers as the event date." }
+      - { name: start_time, label: Playback start time, type: string, description: "24-hour HH:MM, for example 06:30" }
+      - { name: duration_min, label: Playback length (minutes of demo time), type: number }
+      - { name: your_camera, label: Which camera is "your camera", type: string, description: Must match a camera value used in the detections below. }
+      - { name: note, label: Note under the map, type: text, description: Keep the "fictional" and "not to scale" wording. }
+      - name: events
+        label: Events on the map
+        description: "x and y place the marker on the 800 x 600 drawing and must sit on a drawn road. lat and lon decide the buyer road segment."
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.id} {fields.type}" } }
+        fields:
+          - { name: id, label: Event ID, type: string, required: true }
+          - { name: type, label: Event type, type: select, options: { values: [lane_closure, work_zone, debris, pothole] } }
+          - { name: road, label: Where (driver view), type: string }
+          - { name: detail, label: What the camera sees (driver view), type: text }
+          - { name: lat, label: Latitude, type: number }
+          - { name: lon, label: Longitude, type: number }
+          - { name: x, label: Map x (0 to 800), type: number }
+          - { name: y, label: Map y (0 to 600), type: number }
+      - name: detections
+        label: Camera sightings
+        description: An event confirms when 3 different cameras have seen it. Camera values are demo labels, never real device IDs.
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.event} {fields.camera} at minute {fields.minute}" } }
+        fields:
+          - { name: event, label: Event ID, type: string, required: true }
+          - { name: camera, label: Camera label, type: string, required: true }
+          - { name: minute, label: Minutes after start, type: number }
+          - { name: confidence, label: Confidence (0 to 1), type: number }

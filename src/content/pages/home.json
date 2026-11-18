@@ -9,20 +9,53 @@
   "secondary_cta_text": "For data buyers",
   "secondary_cta_link": "/buyers/",
   "facts": [
-    { "value": "3+", "label": "cameras must confirm an event before any buyer sees it" },
-    { "value": "25%", "label": "of license revenue goes back to contributing drivers" },
-    { "value": "Off", "label": "audio recording, by default" },
-    { "value": "0", "label": "customer IDs in buyer data" }
+    {
+      "value": "3+",
+      "label": "cameras must confirm an event before any buyer sees it"
+    },
+    {
+      "value": "25%",
+      "label": "of license revenue goes back to contributing drivers"
+    },
+    {
+      "value": "Off",
+      "label": "audio recording, by default"
+    },
+    {
+      "value": "0",
+      "label": "customer IDs in buyer data"
+    }
   ],
   "features_title": "Built for commuters. Designed for privacy.",
   "features": [
-    { "title": "On-device road AI", "text": "Detects work zones, lane closures, road closures, potholes and debris as you drive, with a confidence score for each." },
-    { "title": "Privacy before upload", "text": "Faces and license plates are blurred on the camera before anything reaches the cloud. Audio stays off unless you turn it on." },
-    { "title": "You choose every buyer", "text": "Approve or decline each buyer and each data level separately, and change your mind any time in the app." },
-    { "title": "Free cloud backup", "text": "Your own clips are backed up for free, and you can export all of your footage if you ever leave." },
-    { "title": "Get paid back", "text": "Each month, a quarter of the license revenue your data earns comes back to you as a bill credit." },
-    { "title": "Fair terms", "text": "Short contracts, a cancellation fee shown before you buy, and no surprises in the fine print." }
+    {
+      "title": "On-device road AI",
+      "text": "Detects work zones, lane closures, road closures, potholes and debris as you drive, with a confidence score for each."
+    },
+    {
+      "title": "Privacy before upload",
+      "text": "Faces and license plates are blurred on the camera before anything reaches the cloud. Audio stays off unless you turn it on."
+    },
+    {
+      "title": "You choose every buyer",
+      "text": "Approve or decline each buyer and each data level separately, and change your mind any time in the app."
+    },
+    {
+      "title": "Free cloud backup",
+      "text": "Your own clips are backed up for free, and you can export all of your footage if you ever leave."
+    },
+    {
+      "title": "Get paid back",
+      "text": "Each month, a quarter of the license revenue your data earns comes back to you as a bill credit."
+    },
+    {
+      "title": "Fair terms",
+      "text": "Short contracts, a cancellation fee shown before you buy, and no surprises in the fine print."
+    }
   ],
+  "map_eyebrow": "See it on the road",
+  "map_title": "One morning at the North Split",
+  "map_text": "A demo of how RoadSense One turns single sightings into trusted road data at the I-65/I-70 North Split in downtown Indianapolis. Watch cameras spot a construction lane closure, see each event confirm once 3 different cameras agree, then switch to the buyer view to see what actually gets shared.",
   "snapshot_title": "Pilot data snapshot",
   "snapshot_text": "A sample of the road events the network detected in the demo dataset. Coordinates are shown for the road, never linked to a driver."
 }

@@ -1,0 +1,63 @@
+{
+  "as_of": "2026-10-14",
+  "start_time": "06:30",
+  "duration_min": 120,
+  "your_camera": "C3",
+  "note": "Fictional demo. The roads are a stylized drawing of the I-65/I-70 North Split area, not to scale. Every event, camera and reading is made up.",
+  "events": [
+    {
+      "id": "E1",
+      "type": "lane_closure",
+      "road": "I-70 westbound, approaching the North Split",
+      "detail": "Construction zone: left lane closed, 2 of 3 lanes open, cones for about 1,000 ft",
+      "lat": 39.7812,
+      "lon": -86.1398,
+      "x": 600,
+      "y": 222
+    },
+    {
+      "id": "E2",
+      "type": "work_zone",
+      "road": "I-65/I-70 southbound near Michigan St",
+      "detail": "Shoulder work with barrels on the right shoulder, all lanes open",
+      "lat": 39.7745,
+      "lon": -86.1452,
+      "x": 528,
+      "y": 345
+    },
+    {
+      "id": "E3",
+      "type": "debris",
+      "road": "I-65 northbound, west of the North Split",
+      "detail": "Tire debris in the center lane",
+      "lat": 39.7838,
+      "lon": -86.1531,
+      "x": 390,
+      "y": 164
+    },
+    {
+      "id": "E4",
+      "type": "pothole",
+      "road": "Michigan St near College Ave",
+      "detail": "Possible pothole in the right lane",
+      "lat": 39.7741,
+      "lon": -86.1503,
+      "x": 380,
+      "y": 330
+    }
+  ],
+  "detections": [
+    { "event": "E1", "camera": "C1", "minute": 8, "confidence": 0.88 },
+    { "event": "E1", "camera": "C5", "minute": 13, "confidence": 0.9 },
+    { "event": "E1", "camera": "C3", "minute": 16, "confidence": 0.93 },
+    { "event": "E1", "camera": "C7", "minute": 31, "confidence": 0.91 },
+    { "event": "E2", "camera": "C3", "minute": 22, "confidence": 0.86 },
+    { "event": "E2", "camera": "C2", "minute": 40, "confidence": 0.89 },
+    { "event": "E2", "camera": "C6", "minute": 52, "confidence": 0.9 },
+    { "event": "E3", "camera": "C4", "minute": 35, "confidence": 0.83 },
+    { "event": "E3", "camera": "C8", "minute": 47, "confidence": 0.87 },
+    { "event": "E3", "camera": "C2", "minute": 66, "confidence": 0.88 },
+    { "event": "E4", "camera": "C6", "minute": 74, "confidence": 0.71 },
+    { "event": "E4", "camera": "C1", "minute": 97, "confidence": 0.76 }
+  ]
+}
