@@ -3,8 +3,9 @@ import site from '../content/settings/site.json';
 import home from '../content/pages/home.json';
 import how from '../content/pages/how.json';
 import buyers from '../content/pages/buyers.json';
+import claims from '../content/pages/claims.json';
 import roadEvents from '../content/data/road_events.json';
 import buyerView from '../content/data/buyer_view.json';
 import northSplit from '../content/data/north_split_demo.json';
 
-export { site, home, how, buyers, roadEvents, buyerView, northSplit };
+export { site, home, how, buyers, claims, roadEvents, buyerView, northSplit };

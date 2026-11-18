@@ -4,6 +4,7 @@ import { url } from '../lib/url';
 const links = [
   { href: '/', label: 'Product' },
   { href: '/how-it-works/', label: 'How it works' },
+  { href: '/claims/', label: 'Claim Vault' },
   { href: '/buyers/', label: 'For data buyers' },
 ];
 const here = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
@@ -42,7 +43,7 @@ const isCurrent = (href: string) => (href === '/' ? here === '/' : here.startsWi
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: var(--color-ink); letter-spacing: -0.01em; }
   nav { margin-left: auto; }
   nav ul { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; }
-  nav a { display: block; padding: 8px 14px; border-radius: var(--radius-pill); text-decoration: none; color: var(--color-ink); font-weight: 500; font-size: var(--fs-sm); }
+  nav a { display: block; padding: 8px 14px; border-radius: var(--radius-pill); text-decoration: none; color: var(--color-ink); font-weight: 500; font-size: var(--fs-sm); white-space: nowrap; }
   nav a:hover { background: var(--color-surface); }
   nav a[aria-current="page"] { background: var(--color-amber-tint); color: var(--color-amber-text); font-weight: 600; }
   .header-cta { padding: 9px 18px; font-size: var(--fs-sm); }

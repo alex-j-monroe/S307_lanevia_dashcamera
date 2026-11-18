@@ -39,10 +39,11 @@ const sample = roadEvents.events.slice(-6).reverse();
       <span class="eyebrow">{site.product_name}</span>
       <h2>{home.features_title}</h2>
       <div class="grid grid--3 features">
-        {home.features.map((f) => (
+        {home.features.map((f: any) => (
           <article class="card card--accent">
             <h3>{f.title}</h3>
             <p>{f.text}</p>
+            {f.link && <a class="card-link" href={url(f.link)}>{f.link_text || 'Learn more'} <span aria-hidden="true">&rarr;</span></a>}
           </article>
         ))}
       </div>
@@ -86,5 +87,7 @@ const sample = roadEvents.events.slice(-6).reverse();
   .hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: var(--space-6); }
   .features { margin-top: var(--space-8); }
   .map-note { margin-top: var(--space-4); }
+  .card-link { font-weight: 600; font-size: var(--fs-sm); text-decoration: none; }
+  .card-link:hover { text-decoration: underline; }
   @media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; } }
 </style>

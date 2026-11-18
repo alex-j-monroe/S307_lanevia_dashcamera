@@ -4,27 +4,72 @@
   "title": "From your windshield to safer roads",
   "intro": "Every RoadSense One follows the same five steps. Nothing is shared unless a driver said yes to that buyer, at that data level.",
   "steps": [
-    { "title": "Record", "text": "The front-facing camera records the road ahead. Audio is off by default, and faces and plates are blurred on the device." },
-    { "title": "Detect", "text": "The on-device model flags road conditions such as work zones and closures, with a location, time and confidence score." },
-    { "title": "Confirm", "text": "An event is released only after 3 or more different cameras see it on the same stretch of road that day, so it describes the road, not a person." },
-    { "title": "Share by consent", "text": "Data goes to a buyer only if the driver opted in for that buyer and data level, under a signed license that bans re-identification." },
-    { "title": "Pay it back", "text": "Each month, 25% of license revenue is split across the drivers whose data was used and applied as a bill credit." }
+    {
+      "title": "Record",
+      "text": "The front-facing camera records the road ahead. Audio is off by default, and faces and plates are blurred on the device."
+    },
+    {
+      "title": "Detect",
+      "text": "The on-device model flags road conditions such as work zones and closures, with a location, time and confidence score."
+    },
+    {
+      "title": "Confirm",
+      "text": "An event is released only after 3 or more different cameras see it on the same stretch of road that day, so it describes the road, not a person."
+    },
+    {
+      "title": "Share by consent",
+      "text": "Data goes to a buyer only if the driver opted in for that buyer and data level, under a signed license that bans re-identification."
+    },
+    {
+      "title": "Pay it back",
+      "text": "Each month, 25% of license revenue is split across the drivers whose data was used and applied as a bill credit."
+    }
   ],
+  "vault_title": "If something happens: the Claim Vault",
+  "vault_text": "Crash clips take a different path. They lock into your private Claim Vault, skip the road data network completely, and only leave it if you send them or turn on insurer claim access.",
+  "vault_link_text": "How the Claim Vault works",
+  "vault_link": "/claims/",
   "levels_title": "Data levels you control",
   "levels": [
-    { "level": "1", "name": "Detection", "receives": "Road-segment event: type, segment, time window, confidence", "default": "Opt-in" },
-    { "level": "2", "name": "Blurred clip", "receives": "Event clip with faces and plates blurred on the device", "default": "Off" },
-    { "level": "3", "name": "Raw video", "receives": "Unblurred video, for government requests with legal process only", "default": "Off" },
-    { "level": "4", "name": "Driver score", "receives": "Per-driver scores", "default": "Not offered" },
-    { "level": "5", "name": "Trip trace", "receives": "Trip sequences from one camera; blocked by our de-identification rules", "default": "Not offered" }
+    {
+      "level": "1",
+      "name": "Detection",
+      "receives": "Road-segment event: type, segment, time window, confidence",
+      "default": "Opt-in"
+    },
+    {
+      "level": "2",
+      "name": "Blurred clip",
+      "receives": "Event clip with faces and plates blurred on the device",
+      "default": "Off"
+    },
+    {
+      "level": "3",
+      "name": "Raw video",
+      "receives": "Unblurred video, for government requests with legal process only. Your own Claim Vault copy is separate and private.",
+      "default": "Off"
+    },
+    {
+      "level": "4",
+      "name": "Driver score",
+      "receives": "Per-driver scores",
+      "default": "Not offered"
+    },
+    {
+      "level": "5",
+      "name": "Trip trace",
+      "receives": "Trip sequences from one camera; blocked by our de-identification rules",
+      "default": "Not offered"
+    }
   ],
   "privacy_title": "Our privacy commitments",
   "privacy": [
     "We never sell to credit reporting agencies.",
     "Buyers never receive customer, device or clip IDs, or a sequence of events from one camera.",
+    "Claim Vault clips are never sold, scored or counted as road data.",
     "Every license contract prohibits re-identifying drivers.",
     "We do not sell location data for drivers in states that ban it.",
-    "Insurers and data brokers receive aggregate road data only."
+    "Insurers buying road data receive aggregate road data only. Claim access is separate, per policy, and only for claims you file."
   ],
   "events_title": "Detected road events (demo data)",
   "events_text": "Every detection in the pilot dataset. Click a column header to sort."

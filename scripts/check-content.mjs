@@ -19,6 +19,16 @@ need(how, ['seo_title', 'seo_description', 'title'], 'How it works page');
 const buyers = load('pages/buyers.json');
 need(buyers, ['seo_title', 'seo_description', 'title'], 'For data buyers page');
 
+const claims = load('pages/claims.json');
+need(claims, ['seo_title', 'seo_description', 'title', 'intro', 'honest_text'], 'Claim Vault page');
+(claims.faq || []).forEach((f, i) => need(f, ['q', 'a'], `Claim Vault FAQ ${i + 1}`));
+// Promises that must stay true to the database rules (CLAIM_SHARE never feeds SHARE_RECORD).
+const never = (claims.access || []).find((a) => /data buyers/i.test(a.who));
+if (!never || never.answer !== 'Never') problems.push('Claim Vault page: the "Data buyers" row must say "Never"');
+(home.features || []).forEach((f, i) => {
+  if (f.link && !f.link.startsWith('/') && !/^https?:\/\//.test(f.link)) problems.push(`Home feature ${i + 1}: link must start with / or http`);
+});
+
 const ev = load('data/road_events.json');
 (ev.events || []).forEach((e, i) => need(e, ['event_id', 'event_type'], `Road events row ${i + 1}`));
 const bv = load('data/buyer_view.json');
