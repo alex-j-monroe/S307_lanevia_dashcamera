@@ -56,6 +56,8 @@ content:
         fields:
           - { name: title, label: Title, type: string, required: true }
           - { name: text, label: Text, type: text, required: true }
+          - { name: link, label: Link (optional), type: string, description: "Leave empty for no link. Example: /claims/" }
+          - { name: link_text, label: Link text (optional), type: string }
       - { name: map_eyebrow, label: Road map small label, type: string }
       - { name: map_title, label: Road map heading, type: string }
       - { name: map_text, label: Road map intro, type: text }
@@ -81,6 +83,10 @@ content:
         fields:
           - { name: title, label: Step name, type: string, required: true }
           - { name: text, label: Explanation, type: text, required: true }
+      - { name: vault_title, label: Claim Vault callout heading, type: string, description: Leave empty to hide the callout. }
+      - { name: vault_text, label: Claim Vault callout text, type: text }
+      - { name: vault_link_text, label: Claim Vault callout button text, type: string }
+      - { name: vault_link, label: Claim Vault callout button link, type: string, description: "Usually /claims/" }
       - { name: levels_title, label: Data levels heading, type: string }
       - name: levels
         label: Data levels
@@ -118,6 +124,10 @@ content:
           - { name: access, label: What they can access, type: string, required: true }
       - { name: view_title, label: Buyer feed heading, type: string }
       - { name: view_text, label: Buyer feed intro, type: text }
+      - { name: partners_title, label: Insurer partner block heading, type: string, description: Leave empty to hide the block. }
+      - { name: partners_text, label: Insurer partner block intro, type: text }
+      - { name: partners_points, label: Insurer partner rules, type: string, list: true, description: One rule per line. Keep these in step with the CLAIM_ACCESS_GRANT rules in the database. }
+      - { name: partners_cta, label: Insurer partner button text, type: string }
       - { name: launch_title, label: Launch plan heading, type: string }
       - name: launch
         label: Launch phases
@@ -129,6 +139,51 @@ content:
           - { name: focus, label: Focus, type: text, required: true }
       - { name: cta_title, label: Bottom call-to-action heading, type: string }
       - { name: cta_text, label: Bottom call-to-action text, type: text }
+
+  # ---------------------------------------------------------------- Claim Vault
+  - name: claims
+    label: Claim Vault page
+    type: file
+    path: src/content/pages/claims.json
+    format: json
+    fields:
+      - { name: seo_title, label: Browser tab and Google title, type: string, required: true }
+      - { name: seo_description, label: Google description, type: text, required: true }
+      - { name: eyebrow, label: Small label above the headline, type: string }
+      - { name: title, label: Page headline, type: string, required: true }
+      - { name: intro, label: Intro paragraph, type: text, required: true }
+      - name: steps
+        label: How the vault works (steps)
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.title}" } }
+        fields:
+          - { name: title, label: Step name, type: string, required: true }
+          - { name: text, label: Explanation, type: text, required: true }
+      - { name: access_title, label: Who can see it heading, type: string }
+      - name: access
+        label: Who can see your vault (table rows)
+        description: Write "Never" exactly to get the dark badge.
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.who}: {fields.answer}" } }
+        fields:
+          - { name: who, label: Who, type: string, required: true }
+          - { name: answer, label: Can they see it?, type: string, required: true }
+          - { name: note, label: Details, type: string }
+      - { name: insurer_title, label: Insurer claim access heading, type: string }
+      - { name: insurer_text, label: Insurer claim access intro, type: text }
+      - { name: insurer_points, label: Insurer claim access rules, type: string, list: true, description: One rule per line. Must match what the database enforces. }
+      - { name: honest_title, label: Caution box heading, type: string }
+      - { name: honest_text, label: Caution box text, type: text, required: true, description: Keep this. It tells drivers footage can also hurt their claim. }
+      - { name: faq_title, label: FAQ heading, type: string }
+      - name: faq
+        label: FAQ
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.q}" } }
+        fields:
+          - { name: q, label: Question, type: string, required: true }
+          - { name: a, label: Answer, type: text, required: true }
+      - { name: cta_title, label: Bottom heading, type: string }
+      - { name: cta_text, label: Bottom text, type: text }
 
   # ---------------------------------------------------------------- Demo data snapshot
   - name: road_events

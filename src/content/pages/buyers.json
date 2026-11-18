@@ -4,17 +4,50 @@
   "title": "Fresh road data, collected with consent",
   "intro": "Lanevia licenses road-condition detections confirmed by multiple cameras. Every record traces back to an active driver consent and a signed license, so your compliance team can say yes.",
   "segments": [
-    { "name": "Road agencies", "use": "Find active work zones and closures across your network, updated daily.", "access": "Detections and blurred clips" },
-    { "name": "Mapping and autonomous vehicles", "use": "Keep maps current and train on real winter and work-zone conditions.", "access": "Detections and blurred clips" },
-    { "name": "Insurers", "use": "Understand road-level risk by segment and month.", "access": "Aggregate road data only, never driver scores" },
-    { "name": "Government requests", "use": "Specific footage for an investigation.", "access": "Only with formal legal process, and every request is logged" }
+    {
+      "name": "Road agencies",
+      "use": "Find active work zones and closures across your network, updated daily.",
+      "access": "Detections and blurred clips"
+    },
+    {
+      "name": "Mapping and autonomous vehicles",
+      "use": "Keep maps current and train on real winter and work-zone conditions.",
+      "access": "Detections and blurred clips"
+    },
+    {
+      "name": "Insurers",
+      "use": "Understand road-level risk by segment and month.",
+      "access": "Aggregate road data only, never driver scores. Claim evidence is a separate partner program."
+    },
+    {
+      "name": "Government requests",
+      "use": "Specific footage for an investigation.",
+      "access": "Only with formal legal process, and every request is logged"
+    }
   ],
   "view_title": "What a license delivers (demo data)",
   "view_text": "This is the exact shape of the buyer feed: road segment, date, event type, how many cameras confirmed it, and average confidence. No customer, device or clip IDs.",
+  "partners_title": "Insurer partner program: claim evidence",
+  "partners_text": "Separate from road data licensing. Policyholders can let one partner insurer pull their locked incident clip when they file a claim, in exchange for a discount you set.",
+  "partners_points": [
+    "Per policy and per claim: a claim number and loss time are required for every pull.",
+    "Only clips locked within the agreed window around the reported loss, up to 72 hours.",
+    "Every clip comes with a SHA-256 fingerprint recorded at upload, for authenticity checks.",
+    "No live feeds, trips, location history or driving scores. Customers can revoke access at any time."
+  ],
+  "partners_cta": "Ask about the partner program",
   "launch_title": "Where we are launching",
   "launch": [
-    { "phase": "Phase 1", "market": "Indianapolis", "focus": "Commuters, with the state DOT as our first buyer for work-zone and closure data, plus winter road conditions." },
-    { "phase": "Phase 2", "market": "Dallas or Houston", "focus": "Autonomous-vehicle and mapping buyers, once Phase 1 proves our consent and de-identification controls." }
+    {
+      "phase": "Phase 1",
+      "market": "Indianapolis",
+      "focus": "Commuters, with the state DOT as our first buyer for work-zone and closure data, plus winter road conditions."
+    },
+    {
+      "phase": "Phase 2",
+      "market": "Dallas or Houston",
+      "focus": "Autonomous-vehicle and mapping buyers, once Phase 1 proves our consent and de-identification controls."
+    }
   ],
   "cta_title": "Interested in a data license?",
   "cta_text": "Tell us your use case, the area you cover and the data level you need."

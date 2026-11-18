@@ -23,7 +23,7 @@
     },
     {
       "value": "0",
-      "label": "customer IDs in buyer data"
+      "label": "vault clips ever sold, scored or added to road data"
     }
   ],
   "features_title": "Built for commuters. Designed for privacy.",
@@ -41,8 +41,10 @@
       "text": "Approve or decline each buyer and each data level separately, and change your mind any time in the app."
     },
     {
-      "title": "Free cloud backup",
-      "text": "Your own clips are backed up for free, and you can export all of your footage if you ever leave."
+      "title": "Claim Vault",
+      "text": "After a crash, the clip that matters locks into your private vault. You decide who sees it, and it is never sold or scored.",
+      "link_text": "How the Claim Vault works",
+      "link": "/claims/"
     },
     {
       "title": "Get paid back",

@@ -49,7 +49,23 @@ import { buyers, buyerView, site } from '../lib/data';
     </div>
   </section>
 
-  <section class="section">
+  {buyers.partners_title && (
+    <section class="section">
+      <div class="container partners">
+        <div>
+          <span class="eyebrow">For insurers</span>
+          <h2>{buyers.partners_title}</h2>
+          <p class="lead">{buyers.partners_text}</p>
+          <a class="btn btn--primary" href={`mailto:${site.contact_email}?subject=Insurer%20partner%20program`}>{buyers.partners_cta || 'Contact us'}</a>
+        </div>
+        <ul class="checklist">
+          {buyers.partners_points.map((p: string) => <li>{p}</li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--surface">
     <div class="container">
       <h2>{buyers.launch_title}</h2>
       <div class="grid grid--2">
@@ -75,6 +91,8 @@ import { buyers, buyerView, site } from '../lib/data';
   </section>
 </Base>
 <style>
+  .partners { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: center; }
+  @media (max-width: 900px) { .partners { grid-template-columns: 1fr; } }
   .cta { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
   .cta p { margin: 0; }
 </style>

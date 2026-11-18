@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import { claims } from '../lib/data';
+import { url } from '../lib/url';
+---
+<Base title={claims.seo_title} description={claims.seo_description}>
+  <section class="page-head">
+    <div class="container">
+      <span class="eyebrow">{claims.eyebrow}</span>
+      <h1>{claims.title}</h1>
+      <p>{claims.intro}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="vault-flow" role="img" aria-label="A locked clip goes to your private vault. From there you can send it to an insurer, the police or an attorney. It never goes to data buyers.">
+        <div class="vf-node vf-node--start"><span class="vf-k">1</span><strong>Crash or Save button</strong><small>Clip locks on the camera</small></div>
+        <div class="vf-arrow" aria-hidden="true"></div>
+        <div class="vf-node vf-node--vault"><span class="vf-k">2</span><strong>Your Claim Vault</strong><small>Private, unblurred, fingerprinted</small></div>
+        <div class="vf-arrow" aria-hidden="true"></div>
+        <div class="vf-out">
+          <div class="vf-node"><strong>Insurer</strong><small>You send it, or claim access</small></div>
+          <div class="vf-node"><strong>Police</strong><small>You send it, or legal process</small></div>
+          <div class="vf-node"><strong>Attorney</strong><small>You send it</small></div>
+          <div class="vf-node vf-node--never"><strong>Data buyers</strong><small>Never</small></div>
+        </div>
+      </div>
+      <ol class="steps vault-steps">
+        {claims.steps.map((s) => <li><h3>{s.title}</h3><p>{s.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container">
+      <h2>{claims.access_title}</h2>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">{claims.access_title}</caption>
+          <thead><tr><th scope="col">Who</th><th scope="col">Can they see it?</th><th scope="col">Details</th></tr></thead>
+          <tbody>
+            {claims.access.map((a) => (
+              <tr>
+                <th scope="row">{a.who}</th>
+                <td><span class={`pill ${a.answer === 'Never' ? 'pill--never' : ''}`}>{a.answer}</span></td>
+                <td class="wrap">{a.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container two-col">
+      <div>
+        <span class="eyebrow">Optional</span>
+        <h2>{claims.insurer_title}</h2>
+        <p class="lead">{claims.insurer_text}</p>
+        <ul class="checklist">
+          {claims.insurer_points.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+      <aside class="card honest">
+        <h3>{claims.honest_title}</h3>
+        <p>{claims.honest_text}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="container narrow">
+      <h2>{claims.faq_title}</h2>
+      <div class="faq">
+        {claims.faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--night">
+    <div class="container cta">
+      <div>
+        <h2>{claims.cta_title}</h2>
+        <p>{claims.cta_text}</p>
+      </div>
+      <a class="btn btn--primary" href={url('/how-it-works/')}>See how road data works</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .vault-flow { display: grid; grid-template-columns: 1fr 40px 1fr 40px 1.4fr; align-items: center; gap: 8px; margin-bottom: var(--space-12); }
+  .vf-node { position: relative; background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow-card); }
+  .vf-node strong { display: block; font-family: var(--font-display); color: var(--color-ink); }
+  .vf-node small { color: var(--color-muted); font-size: var(--fs-xs); }
+  .vf-node--start { border-top: 4px solid var(--color-amber); }
+  .vf-node--vault { background: var(--color-night); border-color: var(--color-night); }
+  .vf-node--vault strong { color: var(--color-on-night); }
+  .vf-node--vault small { color: var(--color-on-night-muted); }
+  .vf-k { position: absolute; top: -12px; right: 12px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--color-amber); color: var(--color-ink); font: 800 var(--fs-xs) var(--font-display); }
+  .vf-arrow { height: 3px; background: var(--color-amber); position: relative; }
+  .vf-arrow::after { content: ''; position: absolute; right: -2px; top: -5px; border: 6.5px solid transparent; border-left: 9px solid var(--color-amber); border-right: 0; }
+  .vf-out { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .vf-out .vf-node { padding: 10px 12px; }
+  .vf-node--never { background: repeating-linear-gradient(-45deg, #fff, #fff 8px, #f7f5f0 8px, #f7f5f0 16px); }
+  .vf-node--never strong { text-decoration: line-through; text-decoration-color: var(--color-amber); text-decoration-thickness: 2px; }
+  .vf-node--never small { color: var(--color-amber-text); font-weight: 700; }
+  .vault-steps { max-width: 860px; }
+  th[scope="row"] { text-align: left; color: var(--color-ink); }
+  .pill--never { background: var(--color-night); color: var(--color-on-night); }
+  .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-12); align-items: start; }
+  .honest { background: var(--color-amber-tint); border-color: #f3d9b4; border-left: 4px solid var(--color-amber); }
+  .honest p { margin: 0; }
+  .narrow { max-width: 820px; }
+  .faq { display: grid; gap: 10px; }
+  .faq details { background: #fff; border: 1px solid var(--color-border); border-radius: 12px; padding: 0 18px; }
+  .faq summary { cursor: pointer; padding: 16px 0; font-weight: 600; color: var(--color-ink); list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; font: 700 1.2rem var(--font-display); color: var(--color-amber-text); }
+  .faq details[open] summary::after { content: '\2212'; }
+  .faq details p { margin: 0 0 16px; }
+  .cta { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .cta p { margin: 0; }
+  @media (max-width: 900px) {
+    .vault-flow { grid-template-columns: 1fr; }
+    .vf-arrow { width: 3px; height: 28px; margin: 0 auto; }
+    .vf-arrow::after { right: -5px; top: auto; bottom: -2px; border: 6.5px solid transparent; border-top: 9px solid var(--color-amber); border-bottom: 0; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>

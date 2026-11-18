@@ -1,0 +1,41 @@
+{
+  "seo_title": "Claim Vault | Lanevia",
+  "seo_description": "Lock the clip that matters after a crash, keep it private, and decide who sees it. Claim Vault footage is never sold, scored or added to road data.",
+  "eyebrow": "Claim Vault",
+  "title": "Your evidence, your call",
+  "intro": "If something happens on the road, RoadSense One locks the clip that matters into your private Claim Vault. Nobody sees it unless you share it, and it never becomes road data.",
+  "steps": [
+    { "title": "It locks itself", "text": "When the camera senses a crash, it saves about 1 to 2 minutes before and 1 minute after. You can also press the button or tap Save in the app." },
+    { "title": "It stays private", "text": "Your vault copy is kept unblurred so it can show what actually happened, including the other car's plate. Only you can open it." },
+    { "title": "You decide who sees it", "text": "Send it to your insurer, the other driver's insurer, the police or an attorney. Each link expires, and every share is logged in your app." },
+    { "title": "It can be verified", "text": "We record a digital fingerprint of the file when it uploads, so an adjuster or court can check it was not edited." }
+  ],
+  "access_title": "Who can see your vault",
+  "access": [
+    { "who": "You", "answer": "Always", "note": "Watch, download or delete any clip in the app." },
+    { "who": "Your insurer", "answer": "Only if you choose", "note": "You send it, or you turn on insurer claim access below." },
+    { "who": "Police and courts", "answer": "Only with legal process or if you send it", "note": "We tell you about a request unless the law does not allow it." },
+    { "who": "Data buyers", "answer": "Never", "note": "Vault clips never count toward road events and are never licensed." },
+    { "who": "Lanevia staff", "answer": "Never by default", "note": "Only at your request, for support, and every view is logged." }
+  ],
+  "insurer_title": "Optional: insurer claim access",
+  "insurer_text": "Some insurers in our partner program offer a discount if you let them pull your vault clip when you file a claim. It is a trade, so here is exactly what it covers.",
+  "insurer_points": [
+    "One insurer and one policy. You can turn it off any time in the app.",
+    "Your insurer only gets clips locked near the time of a claim you filed, with a claim number.",
+    "Your insurer never gets a live feed, your trips, your location history or a driving score.",
+    "We do not score how you drive. The discount is for guaranteed evidence, not for being watched."
+  ],
+  "honest_title": "Worth knowing before you share",
+  "honest_text": "Footage shows what happened, even when it does not help you. If you were at fault, sharing a clip can work against your claim, and your insurer may ask for footage you said exists. Read your policy, and talk to your insurer or an attorney if you are unsure.",
+  "faq_title": "Questions",
+  "faq": [
+    { "q": "How long do you keep vault clips?", "a": "About 90 days, then they are deleted unless you extend them or a legal hold applies. You can delete a clip sooner." },
+    { "q": "Can my insurer see all of my driving?", "a": "No. Even with claim access turned on, your insurer only receives clips locked near the time of a claim you filed." },
+    { "q": "Does the vault copy have audio?", "a": "Only if you turned audio on. Audio is off by default, and some states require everyone in the car to agree before you record." },
+    { "q": "What if the camera is damaged in the crash?", "a": "Locked clips upload as soon as the camera has a connection, so a copy is usually safe in your vault even if the camera is not." },
+    { "q": "Does this cost extra?", "a": "No. The Claim Vault is included with every RoadSense One plan." }
+  ],
+  "cta_title": "Already have a RoadSense One?",
+  "cta_text": "Open the Lanevia app, go to Claim Vault, and check that crash locking is on."
+}
